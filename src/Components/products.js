@@ -395,17 +395,7 @@ const products = [
     // bestseller="BestSeller"
     discountCost: 179999.89,
   },
-  {
-    id: 36,
-    discount: 5,
-    brand: "Samsung",
-    image:
-      "https://m.media-amazon.com/images/I/71iZ+fdoI9L._AC_UY327_FMwebp_QL65_.jpg",
-    item: "Samsung Galaxy S25 5G AI(Titanium Black, 8GB+128GB)",
-    rating: 4.4,
-    // bestseller="BestSeller"
-    discountCost: 179999.89,
-  },
+
 ];
 
 export default products;
