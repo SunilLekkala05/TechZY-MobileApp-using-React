@@ -52,11 +52,13 @@ body[data-theme="dark"] {
   --card-hover-shadow: 0 8px 25px rgba(33, 134, 207, 0.25);
   --sidebar-shadow: -8px 0 30px rgba(0, 0, 0, 0.5);
   --controls-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  --card-border: none;
 }
 
 /* Light Theme */
 body[data-theme="light"] {
-  --bg-primary: #f0f2f5;
+  --bg-primary: #e2e6ec;
   --bg-navbar: #ffffff;
   --bg-card: #ffffff;
   --bg-controls: linear-gradient(135deg, #ffffff, #f1f5f9);
@@ -87,7 +89,7 @@ body[data-theme="light"] {
 
   --accent: #2186cf;
   --accent-hover: #0d5bdd;
-  --accent-btn: #2874f0;
+  --accent-btn: #2186cf;
 
   --scrollbar-thumb: rgba(0, 0, 0, 0.15);
   --qty-btn-bg: rgba(0, 0, 0, 0.05);
@@ -100,10 +102,12 @@ body[data-theme="light"] {
   --sidebar-close-hover-bg: rgba(0, 0, 0, 0.1);
 
   --sidebar-img-bg: #f8fafc;
-  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  --card-hover-shadow: 0 8px 25px rgba(33, 134, 207, 0.15);
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  --card-hover-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
   --sidebar-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
   --controls-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --card-border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 * {
@@ -512,7 +516,8 @@ body {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--card-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+  border: var(--card-border, none);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
   position: relative;
 }
 

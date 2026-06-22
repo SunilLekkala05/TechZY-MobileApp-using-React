@@ -33,21 +33,9 @@ export default function ItemCard({
         <h2 className="item_name">{item}</h2>
         <div className="review">
           <p className="rating">
-            {Array.from({ length: 5 }, (_, i) => {
-              if (i < Math.floor(rating)) {
-                return <span key={i} className="star filled">★</span>;
-              } else if (i < rating) {
-                return (
-                  <span key={i} className="star half-star">
-                    <span className="star-empty">★</span>
-                    <span className="star-filled-half">★</span>
-                  </span>
-                );
-              } else {
-                return <span key={i} className="star empty">☆</span>;
-              }
-            })}
-            <span className="rating-number">{rating}</span>
+            {"★".repeat(Math.floor(rating))}
+            {"☆".repeat(Math.floor(5 - rating))}
+            {rating}
           </p>
           <p className="bestsell">{bestseller}</p>
         </div>
