@@ -38,9 +38,9 @@ export default function WishlistPage({
             <ItemCard
               key={"wish-" + data.id}
               id={data.id}
-              discount={data.discount}
+              discountPercentage={data.discountPercentage}
               image={data.image}
-              item={data.item}
+              itemName={data.itemName}
               rating={data.rating}
               bestseller={data.bestseller}
               discountCost={data.discountCost}

@@ -14,10 +14,46 @@ function App() {
 
   //State
   //Cart - array of products in cart
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem("techstore-cart");
+
+    if (savedCart) //true
+    {
+      try {
+        return JSON.parse(savedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage", error);
+        return [];
+      }
+    }
+    return [];
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem("techstore-cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
 
   //Wishlist - array of product IDs that are wishlisted
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(() => {
+    const savedWishlist = localStorage.getItem("techstore-wishlist");
+
+    if (savedWishlist) {
+      try {
+        return JSON.parse(savedWishlist);
+      } catch (error) {
+        console.error("Error parsing wishlist from localStorage", error);
+        return [];
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("techstore-wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
 
   //Search - what user types in search box
   const [searchTerm, setSearchTerm] = useState("");
@@ -170,16 +206,16 @@ function App() {
         wishlistCount={wishlist.length}
       />
       <Maincontent />
-      <h2 className="section-title">Most Sold Mobiles</h2>
+      <h2 id="deals" className="section-title">Most Sold Mobiles</h2>
 
       <div className="allitems">
         {bestProducts.map((data) => (
           <ItemCard
             key={data.id}
             id={data.id}
-            discount={data.discount}
+            discountPercentage={data.discountPercentage}
             image={data.image}
-            item={data.item}
+            itemName={data.itemName}
             rating={data.rating}
             bestseller={data.bestseller}
             discountCost={data.discountCost}
@@ -190,15 +226,15 @@ function App() {
           />
         ))}
       </div>
-      <h2 className="section-title">Available Mobiles</h2>
+      <h2 id="products" className="section-title">Available Mobiles</h2>
       <div className="allitems">
         {filteredProducts.map((datas) => (
           <ItemCard
             key={datas.id}
             id={datas.id}
-            discount={datas.discount}
+            discountPercentage={datas.discountPercentage}
             image={datas.image}
-            item={datas.item}
+            itemName={datas.itemName}
             rating={datas.rating}
             bestseller={datas.bestseller}
             discountCost={datas.discountCost}

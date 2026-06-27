@@ -1,8 +1,8 @@
 export default function ItemCard({
   id,
-  discount,
+  discountPercentage,
   image,
-  item,
+  itemName,
   rating,
   bestseller,
   discountCost,
@@ -12,15 +12,15 @@ export default function ItemCard({
   onToggleWishlist,
 }) {
   // Calculate originalCost if not provided
-  // Formula: originalCost = (discountCost / (100 - discount)) * 100
+  // Formula: originalCost = (discountCost / (100 - discountPercentage)) * 100
   const calculatedOriginalCost =
-    originalCost || Math.round(((discountCost * 100) / (100 - discount)) * 100) / 100;
+    originalCost || Math.round(((discountCost * 100) / (100 - discountPercentage)) * 100) / 100;
 
   return (
     <div className="item">
-      <div className="discount">{discount}% OFF</div>
+      <div className="discount">{discountPercentage}% OFF</div>
       <button
-        className={`wishlisted ${isWishlisted ? "active" : ""}`}
+        className={`wishlisted${isWishlisted ? " active" : ""}`}
         onClick={onToggleWishlist}
       >
         {isWishlisted ? "❤️" : "🤍"}
@@ -30,7 +30,7 @@ export default function ItemCard({
       </div>
 
       <div className="description">
-        <h2 className="item_name">{item}</h2>
+        <h2 className="item_name">{itemName}</h2>
         <div className="review">
           <p className="rating">
             {"★".repeat(Math.floor(rating))}

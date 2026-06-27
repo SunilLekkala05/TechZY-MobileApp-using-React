@@ -37,10 +37,10 @@ export default function CartSidebar({
             cartItems.map((item) => (
               <div className="sidebar-item" key={item.id}>
                 <div className="sidebar-item-img">
-                  <img src={item.image} alt={item.item} />
+                  <img src={item.image} alt={item.itemName} />
                 </div>
                 <div className="sidebar-item-details">
-                  <p className="sidebar-item-name">{item.item}</p>
+                  <p className="sidebar-item-name">{item.itemName}</p>
                   <p className="sidebar-item-price">
                     ₹{item.discountCost.toLocaleString("en-IN")}
                   </p>
