@@ -263,6 +263,201 @@ body {
   transform: scale(0.9);
 }
 
+/* ── Hamburger Button (hidden on desktop) ── */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--text-nav-link);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburger-btn.open .hamburger-line:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile-only items (hidden on desktop) */
+.mobile-theme-toggle,
+.mobile-menu-actions {
+  display: none;
+}
+
+.mobile-theme-btn {
+  background: var(--bg-sidebar-item);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.mobile-theme-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* ── Responsive: Mobile Nav ── */
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    padding: 8px 16px;
+  }
+
+  /* Show hamburger */
+  .hamburger-btn {
+    display: flex;
+    order: 2;
+  }
+
+  /* Keep logo left, hamburger right, login icons in between */
+  .title {
+    order: 1;
+    flex: 1;
+  }
+
+  .login {
+    order: 3;
+    gap: 12px;
+  }
+
+  /* Hide Sign In / Shop Now on mobile */
+  .signin,
+  .shopnow {
+    display: none;
+  }
+
+  /* Hide the desktop theme toggle (it's inside the mobile menu instead) */
+  .theme-toggle {
+    display: none;
+  }
+
+  /* Nav links — hidden by default, slide down when open */
+  .view_items {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    order: 4;
+    background: var(--bg-navbar);
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+
+  .view_items.mobile-open {
+    display: flex;
+    animation: slideDown 0.3s ease;
+  }
+
+  .view_items li {
+    width: 100%;
+  }
+
+  .view_items a {
+    display: block;
+    padding: 14px 20px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .view_items a:hover {
+    background: var(--bg-sidebar-item-hover);
+    color: var(--accent);
+  }
+
+  /* Show mobile-only items inside the dropdown */
+  .mobile-theme-toggle {
+    display: block;
+    padding: 12px 20px;
+  }
+
+  .mobile-menu-actions {
+    display: flex;
+    gap: 12px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .mobile-signin {
+    flex: 1;
+    text-align: center;
+    padding: 10px 16px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-signin:hover {
+    background: var(--bg-sidebar-item-hover);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .mobile-shopnow {
+    flex: 1;
+    text-align: center;
+    padding: 10px 16px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-shopnow:hover {
+    background: var(--accent-hover);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .cart-badge {
   position: absolute;
   top: -10px;
@@ -344,14 +539,13 @@ body {
 
 /*Maincontent*/
 .content {
-  height: 500px;
+  min-height: 500px;
 
   background-size: cover;
-  background-position: center;
+  background-position: center 40%;
   background-repeat: no-repeat;
 
-  overflow: hidden;
-  background-size: contain;
+  overflow: visible;
   position: relative;
 }
 
@@ -374,14 +568,14 @@ body {
 }
 
 .hero-content h1 {
-  font-size: 4.5rem;
+  font-size: clamp(1.8rem, 5vw, 4.5rem);
   font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 .hero-content p {
-  font-size: 1.3rem;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
   line-height: 1.8;
   margin-bottom: 30px;
   color: #f3f4f6;
@@ -397,10 +591,10 @@ body {
 
 .hero-features span {
   background: rgba(255, 255, 255, 0.12);
-  padding: 10px 18px;
+  padding: 8px 14px;
   border-radius: 25px;
   backdrop-filter: blur(4px);
-  font-size: 0.95rem;
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
   font-weight: 600;
 }
 
@@ -1046,7 +1240,7 @@ body {
   position: relative;
   background: var(--bg-navbar);
   color: var(--text-primary);
-  padding: 60px 40px 0;
+  padding: 60px 35px 0;
   margin-top: 80px;
   overflow: hidden;
   transition: background 0.4s ease, color 0.4s ease;
@@ -1069,14 +1263,29 @@ body {
   border-radius: 2px;
 }
 
-/* Main grid */
+/* Main layout — uses flex-wrap so columns shrink & wrap naturally like the product grid */
 .footer-main {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
-  gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
   max-width: 1280px;
   margin: 0 auto;
   padding-bottom: 40px;
+  justify-content: center;
+}
+
+/* Brand column gets more space */
+.footer-brand {
+  flex: 1 1 260px;
+  min-width: 220px;
+  max-width: 340px;
+}
+
+/* Link & contact columns */
+.footer-col {
+  flex: 1 1 180px;
+  min-width: 160px;
+  max-width: 280px;
 }
 
 /* ── Brand Column ── */
@@ -1330,26 +1539,97 @@ body {
 }
 
 /* ── Footer Responsive ── */
-@media (max-width: 992px) {
-  .footer-main {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 
-@media (max-width: 600px) {
+/* The footer now uses flex-wrap (like the product grid), so columns
+   naturally shrink and wrap as the viewport gets smaller.
+   Only minimal tweaks needed at small sizes for centering/stacking. */
+
+@media (max-width: 768px) {
   .site-footer {
     padding: 40px 20px 0;
   }
 
-  .footer-main {
-    grid-template-columns: 1fr;
-    gap: 30px;
+  .footer-brand {
+    flex: 1 1 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-brand .footer-tagline {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-social-links {
+    justify-content: center;
   }
 
   .footer-bottom-bar {
     flex-direction: column;
     gap: 10px;
     text-align: center;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .site-footer {
+    padding: 30px 16px 0;
+    margin-top: 50px;
+  }
+
+  .footer-main {
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .footer-col {
+    flex: 1 1 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-col-title {
+    display: inline-block;
+  }
+
+  .footer-col-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-contact-list {
+    align-items: center;
+  }
+
+  .footer-contact-item {
+    justify-content: center;
+  }
+
+  .footer-newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .newsletter-form {
+    width: 100%;
+    max-width: 320px;
   }
 }
 
@@ -1428,8 +1708,15 @@ body {
 }
 
 @keyframes floatHeart {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 .wishlist-empty h3 {

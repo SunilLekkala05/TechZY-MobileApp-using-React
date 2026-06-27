@@ -1,3 +1,4 @@
+import { useState } from "react";
 import logo from "../assets/logo.png";
 
 export default function Header({
@@ -8,24 +9,60 @@ export default function Header({
   onWishlistClick,
   wishlistCount,
 }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <nav className="header">
       <div className="title">
         <img src={logo} alt="Techzy Logo" width="100" />
       </div>
 
-      <ul className="view_items">
+      {/* Hamburger button — visible only on small screens */}
+      <button
+        className={`hamburger-btn ${isMobileMenuOpen ? "open" : ""}`}
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        aria-label="Toggle navigation menu"
+      >
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+      </button>
+
+      <ul className={`view_items ${isMobileMenuOpen ? "mobile-open" : ""}`}>
         <li>
-          <a href="#products">Products</a>
+          <a href="#products" onClick={() => setIsMobileMenuOpen(false)}>
+            Products
+          </a>
         </li>
         <li>
-          <a href="#deals">Deals</a>
+          <a href="#deals" onClick={() => setIsMobileMenuOpen(false)}>
+            Deals
+          </a>
         </li>
         <li>
-          <a href="#contact">Support</a>
+          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+            Support
+          </a>
         </li>
         <li>
-          <a href="#contact">About</a>
+          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+            About
+          </a>
+        </li>
+        {/* Theme toggle inside mobile menu */}
+        <li className="mobile-theme-toggle">
+          <button onClick={onToggleTheme} className="mobile-theme-btn">
+            {isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+          </button>
+        </li>
+        {/* Sign In & Shop Now inside mobile menu */}
+        <li className="mobile-menu-actions">
+          <a href="#" className="mobile-signin" onClick={() => setIsMobileMenuOpen(false)}>
+            Sign In
+          </a>
+          <a href="#" className="mobile-shopnow" onClick={() => setIsMobileMenuOpen(false)}>
+            Shop Now
+          </a>
         </li>
       </ul>
 
