@@ -4,6 +4,7 @@ import Header from "./Components/Header.jsx";
 import CartSidebar from "./Components/CartSidebar.jsx";
 import WishlistPage from "./Components/WishlistPage.jsx";
 import Maincontent from "./Components/Maincontent.jsx";
+import SortingBar from "./Components/SortingBar.jsx";
 import products from "./Components/products.js";
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
@@ -69,7 +70,7 @@ function App() {
   const [selectedBrand, setSelectedBrand] = useState("All");
 
   //Sort - how to sort products
-  const [sortBy, setSortBy] = useState([]);
+  const [sortBy, setSortBy] = useState("");
 
   //Cart sidebar open/close
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -158,16 +159,40 @@ function App() {
   //Wishlist items (full product objects)
   const wishlistItems = products.filter((p) => wishlist.includes(p.id));
 
-  //Step1 : Filter based on search [Based on brand]
+  //Step1 : Filter based on search + brand dropdown
   let filteredProducts = products.filter((product) => {
     const matchesSearch = product.brand
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-    return matchesSearch;
+    const matchesBrand =
+      selectedBrand === "All" || product.brand === selectedBrand;
+
+    return matchesSearch && matchesBrand;
   });
 
   //Step2 : Sort based on filtered products
+  if (sortBy === "rating-high") {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.rating - a.rating);
+  } else if (sortBy === "rating-low") {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.rating - b.rating);
+  } else if (sortBy === "discount-high") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => b.discountPercentage - a.discountPercentage,
+    );
+  } else if (sortBy === "discount-low") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => a.discountPercentage - b.discountPercentage,
+    );
+  } else if (sortBy === "price-low") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => a.discountCost - b.discountCost,
+    );
+  } else if (sortBy === "price-high") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => b.discountCost - a.discountCost,
+    );
+  }
 
   //If wishlist page is open, show that instead
   if (showWishlistPage) {
@@ -236,6 +261,15 @@ function App() {
         ))}
       </div>
       <h2 className="section-title">Available Mobiles</h2>
+      <SortingBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        selectedBrand={selectedBrand}
+        onBrandChange={setSelectedBrand}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        brands={allBrands}
+      />
       <div className="allitems">
         {filteredProducts.map((datas) => (
           <ItemCard
