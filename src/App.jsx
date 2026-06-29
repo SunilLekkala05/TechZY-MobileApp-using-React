@@ -6,11 +6,18 @@ import WishlistPage from "./Components/WishlistPage.jsx";
 import Maincontent from "./Components/Maincontent.jsx";
 import products from "./Components/products.js";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
   //BRANDS
   const allBrands = [...new Set(products.map((p) => p.brand))];
+
+  const topRef = useRef(null);
+
+  function scrollToTop() {
+    topRef.current.scrollIntoView();
+  }
+
 
   //State
   //Cart - array of products in cart
@@ -51,7 +58,7 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem("techstore-wishlist", JSON.stringify(wishlist));
+    localStorage.setItem("tec hstore-wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
 
@@ -166,6 +173,7 @@ function App() {
   if (showWishlistPage) {
     return (
       <>
+        <div ref={topRef}></div>
         <Header
           cartCount={cartCount}
           onCartClick={() => setIsCartOpen(true)}
@@ -190,13 +198,14 @@ function App() {
           onDecrement={decrementItem}
           onRemove={removeItem}
         />
-        <Footer />
+        <Footer onScrollToTop={scrollToTop} />
       </>
     );
   }
 
   return (
     <>
+      <div ref={topRef}></div>
       <Header
         cartCount={cartCount}
         onCartClick={() => setIsCartOpen(true)}
@@ -206,7 +215,7 @@ function App() {
         wishlistCount={wishlist.length}
       />
       <Maincontent />
-      <h2 id="deals" className="section-title">Most Sold Mobiles</h2>
+      <h2 className="section-title">Most Sold Mobiles</h2>
 
       <div className="allitems">
         {bestProducts.map((data) => (
@@ -226,7 +235,7 @@ function App() {
           />
         ))}
       </div>
-      <h2 id="products" className="section-title">Available Mobiles</h2>
+      <h2 className="section-title">Available Mobiles</h2>
       <div className="allitems">
         {filteredProducts.map((datas) => (
           <ItemCard
@@ -254,7 +263,7 @@ function App() {
         onDecrement={decrementItem}
         onRemove={removeItem}
       />
-      <Footer />
+      <Footer onScrollToTop={scrollToTop} />
     </>
   );
 }

@@ -1,3 +1,8 @@
+import SidebarOverlay from "./CartSidebar_Components/SidebarOverlay";
+import SidebarHeader from "./CartSidebar_Components/SidebarHeader";
+import SidebarItem from "./CartSidebar_Components/SidebarItem";
+import SidebarFooter from "./CartSidebar_Components/SidebarFooter";
+
 export default function CartSidebar({
   isOpen,
   onClose,
@@ -9,21 +14,10 @@ export default function CartSidebar({
 }) {
   return (
     <>
-      {/* Dark overlay behind sidebar */}
-      <div
-        className={`sidebar-overlay ${isOpen ? "active" : ""}`}
-        onClick={onClose}
-      />
+      <SidebarOverlay isOpen={isOpen} onClose={onClose} />
 
-      {/* Sidebar panel */}
       <div className={`cart-sidebar ${isOpen ? "open" : ""}`}>
-        {/* Header */}
-        <div className="sidebar-header">
-          <h2 className="sidebar-title">🛒 Your Cart</h2>
-          <button className="sidebar-close" onClick={onClose}>
-            ✕
-          </button>
-        </div>
+        <SidebarHeader onClose={onClose} />
 
         {/* Cart items */}
         <div className="sidebar-body">
@@ -35,56 +29,18 @@ export default function CartSidebar({
             </div>
           ) : (
             cartItems.map((item) => (
-              <div className="sidebar-item" key={item.id}>
-                <div className="sidebar-item-img">
-                  <img src={item.image} alt={item.itemName} />
-                </div>
-                <div className="sidebar-item-details">
-                  <p className="sidebar-item-name">{item.itemName}</p>
-                  <p className="sidebar-item-price">
-                    ₹{item.discountCost.toLocaleString("en-IN")}
-                  </p>
-                  <div className="sidebar-qty-controls">
-                    <button
-                      className="qty-btn"
-                      onClick={() => onDecrement(item.id)}
-                    >
-                      −
-                    </button>
-                    <span className="qty-value">{item.quantity}</span>
-                    <button
-                      className="qty-btn"
-                      onClick={() => onIncrement(item.id)}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="qty-remove"
-                      onClick={() => onRemove(item.id)}
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <SidebarItem
+                key={item.id}
+                item={item}
+                onIncrement={onIncrement}
+                onDecrement={onDecrement}
+                onRemove={onRemove}
+              />
             ))
           )}
         </div>
 
-        {/* Footer with total */}
-        {cartItems.length > 0 && (
-          <div className="sidebar-footer">
-            <div className="sidebar-total-row">
-              <span className="sidebar-total-label">Total</span>
-              <span className="sidebar-total-amount">
-                ₹{cartTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-              </span>
-            </div>
-            <button className="sidebar-checkout-btn">
-              Proceed to Checkout →
-            </button>
-          </div>
-        )}
+        {cartItems.length > 0 && <SidebarFooter cartTotal={cartTotal} />}
       </div>
     </>
   );
