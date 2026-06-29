@@ -12,8 +12,6 @@ const NAV_ITEMS = [
 export default function NavLinks({
   isOpen,
   onCloseMenu,
-  isDarkMode,
-  onToggleTheme,
 }) {
   return (
     <ul className={`view_items ${isOpen ? "mobile-open" : ""}`}>
@@ -26,7 +24,7 @@ export default function NavLinks({
       ))}
 
       {/* Mobile-only items */}
-      <MobileThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
+      <MobileThemeToggle />
       <MobileMenuActions onCloseMenu={onCloseMenu} />
     </ul>
   );

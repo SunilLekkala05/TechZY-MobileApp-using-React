@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import Logo from "./Header_Components/Logo";
 import HamburgerButton from "./Header_Components/HamburgerButton";
@@ -7,16 +8,18 @@ import ThemeToggle from "./Header_Components/ThemeToggle";
 import WishlistButton from "./Header_Components/WishlistButton";
 import CartButton from "./Header_Components/CartButton";
 import ActionLinks from "./Header_Components/ActionLinks";
+import UserName from "./Header_Components/UserName";
 
-export default function Header({
-  cartCount,
-  onCartClick,
-  isDarkMode,
-  onToggleTheme,
-  onWishlistClick,
-  wishlistCount,
-}) {
+import { CartContext } from "../Context/CartContext";
+import { WishlistContext } from "../Context/WishlistContext";
+import { ThemeContext } from "../Context/ThemeContext";
+
+export default function Header() {
+  const { cartCount } = useContext(CartContext);
+  const { wishlistCount } = useContext(WishlistContext);
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -32,15 +35,14 @@ export default function Header({
       <NavLinks
         isOpen={isMobileMenuOpen}
         onCloseMenu={closeMenu}
-        isDarkMode={isDarkMode}
-        onToggleTheme={onToggleTheme}
       />
 
       <div className="login">
-        <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
-        <WishlistButton wishlistCount={wishlistCount} onWishlistClick={onWishlistClick} />
-        <CartButton cartCount={cartCount} onCartClick={onCartClick} />
+        <ThemeToggle />
+        <WishlistButton />
+        <CartButton />
         <ActionLinks />
+        <UserName />
       </div>
     </nav>
   );

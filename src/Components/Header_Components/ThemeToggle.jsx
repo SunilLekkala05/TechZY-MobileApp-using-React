@@ -1,9 +1,14 @@
 // 6th Component - Theme Toggle (Desktop dark/light mode switch button)
-export default function ThemeToggle({ isDarkMode, onToggleTheme }) {
+import { useContext } from "react";
+import { ThemeContext } from "../../Context/ThemeContext";
+
+export default function ThemeToggle() {
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+
   return (
     <button
       className="theme-toggle"
-      onClick={onToggleTheme}
+      onClick={toggleTheme}
       title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
     >
       {isDarkMode ? "☀️" : "🌙"}

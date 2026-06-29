@@ -1,18 +1,17 @@
-// 7th Component - Wishlist Button (Heart icon with badge count)
-export default function WishlistButton({ wishlistCount, onWishlistClick }) {
+// 7th Component - Wishlist Button (Heart icon with badge count, links to /wishlist)
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { WishlistContext } from "../../Context/WishlistContext";
+
+export default function WishlistButton() {
+  const { wishlistCount } = useContext(WishlistContext);
+
   return (
-    <a
-      href="#"
-      className="wishlist-link"
-      onClick={(e) => {
-        e.preventDefault();
-        onWishlistClick();
-      }}
-    >
+    <Link to="/wishlist" className="wishlist-link">
       ❤️
       {wishlistCount > 0 && (
         <span className="wishlist-badge">{wishlistCount}</span>
       )}
-    </a>
+    </Link>
   );
 }

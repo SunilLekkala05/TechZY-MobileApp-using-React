@@ -1,7 +1,9 @@
-// 1st Component - Wishlist Back Button (Arrow button to go back to home)
-export default function WishlistBackButton({ onGoHome }) {
+// 1st Component - Wishlist Back Button (Link to go back to home)
+import { Link } from "react-router-dom";
+
+export default function WishlistBackButton() {
   return (
-    <button className="wishlist-back-btn" onClick={onGoHome}>
+    <Link to="/" className="wishlist-back-btn">
       <svg
         width="20"
         height="20"
@@ -16,6 +18,6 @@ export default function WishlistBackButton({ onGoHome }) {
         <polyline points="12 19 5 12 12 5" />
       </svg>
       Back to Home
-    </button>
+    </Link>
   );
 }

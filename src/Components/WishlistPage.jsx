@@ -1,18 +1,19 @@
+import { useContext } from "react";
+import { CartContext } from "../Context/CartContext";
+import { WishlistContext } from "../Context/WishlistContext";
 import ItemCard from "./Itemcard.jsx";
 import WishlistBackButton from "./WishlistPage_Components/WishlistBackButton";
 import WishlistHeader from "./WishlistPage_Components/WishlistHeader";
 import WishlistEmpty from "./WishlistPage_Components/WishlistEmpty";
 
-export default function WishlistPage({
-  wishlistItems,
-  wishlist,
-  onToggleWishlist,
-  onAddToCart,
-  onGoHome,
-}) {
+export default function WishlistPage() {
+  const { wishlistItems, wishlist, toggleWishlist } =
+    useContext(WishlistContext);
+  const { addToCart } = useContext(CartContext);
+
   return (
     <div className="wishlist-page">
-      <WishlistBackButton onGoHome={onGoHome} />
+      <WishlistBackButton />
       <WishlistHeader count={wishlistItems.length} />
 
       {wishlistItems.length > 0 ? (
@@ -29,13 +30,13 @@ export default function WishlistPage({
               discountCost={data.discountCost}
               originalCost={data.originalCost}
               isWishlisted={wishlist.includes(data.id)}
-              onAddToCart={() => onAddToCart(data)}
-              onToggleWishlist={() => onToggleWishlist(data.id)}
+              onAddToCart={() => addToCart(data)}
+              onToggleWishlist={() => toggleWishlist(data.id)}
             />
           ))}
         </div>
       ) : (
-        <WishlistEmpty onGoHome={onGoHome} />
+        <WishlistEmpty />
       )}
     </div>
   );

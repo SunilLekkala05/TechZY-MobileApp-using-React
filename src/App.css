@@ -127,6 +127,133 @@ body {
   transition: background-color 0.4s ease;
 }
 
+/* ═══════════════════════════════════════════════════════
+   Loading Spinner
+   ═══════════════════════════════════════════════════════ */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 24px;
+}
+
+.loading-spinner {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation: spinnerRotate 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.spinner-ring:nth-child(1) {
+  border-top-color: var(--accent, #2186cf);
+  animation-delay: -0.45s;
+}
+
+.spinner-ring:nth-child(2) {
+  border-top-color: var(--text-section-title, #1bcd65);
+  animation-delay: -0.3s;
+  inset: 6px;
+}
+
+.spinner-ring:nth-child(3) {
+  border-top-color: #ff4757;
+  animation-delay: -0.15s;
+  inset: 12px;
+}
+
+@keyframes spinnerRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Error State
+   ═══════════════════════════════════════════════════════ */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 12px;
+  text-align: center;
+  padding: 20px;
+}
+
+.error-icon {
+  font-size: 3rem;
+}
+
+.error-container h2 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.error-container p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.retry-btn {
+  margin-top: 8px;
+  padding: 10px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 134, 207, 0.3);
+}
+
+/* Wishlist back button — works as a Link now */
+a.wishlist-back-btn {
+  text-decoration: none;
+}
+
+/* Wishlist shop button — works as a Link now */
+a.wishlist-shop-btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
 /*Header / Navbar*/
 .header {
   position: sticky;
@@ -193,6 +320,39 @@ body {
   align-items: center;
   gap: 18px;
   font-size: 16px;
+}
+
+/* User Greeting in Header */
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(33, 134, 207, 0.12), rgba(13, 91, 221, 0.08));
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(33, 134, 207, 0.2);
+  cursor: default;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.user-greeting:hover {
+  background: linear-gradient(135deg, rgba(33, 134, 207, 0.2), rgba(13, 91, 221, 0.14));
+  border-color: rgba(33, 134, 207, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(33, 134, 207, 0.15);
+}
+
+.user-greeting-icon {
+  font-size: 14px;
+}
+
+.user-greeting-text {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color 0.4s ease;
 }
 
 .signin {
@@ -521,8 +681,9 @@ body {
     display: none;
   }
 
-  /* Hide desktop theme toggle — it's in the mobile menu */
-  .login .theme-toggle {
+  /* Hide desktop theme toggle & user greeting — they're in the mobile menu */
+  .login .theme-toggle,
+  .login .user-greeting {
     display: none;
   }
 
